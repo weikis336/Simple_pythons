@@ -4,7 +4,7 @@ import os
 def clear_terminal():
   os.system('cls' if os.name == 'nt' else 'clear')
   #Borra terminal
-  
+
 def startgame():
   #Inicio del juego, consulta la cantidad de jugadores 
   human = 0
@@ -29,7 +29,7 @@ def rounds():
         return rounds
       else:
         print("Insert a valid number in the range")
-        
+
 def match(numberofplayers, player, player1):
     #Funcion que ejecuta el juego
     playerselect = "something"
@@ -68,7 +68,7 @@ def match(numberofplayers, player, player1):
        #Se le transmite a la funcion battle los valores de todos los integrantes de la partida
       game = battle(playerselect, playerselect1, player, player1)
     return game
-  
+
 def battle(playerselect, playerselect1, player, player1):
   game = 12
   #Se comprueba el resultado de la jugada
@@ -96,22 +96,25 @@ def battle(playerselect, playerselect1, player, player1):
   return game
 
 numberofplayers = startgame()
-if numberofplayers == 2:
-    player = input("What is your name player 1?\n")
-    player1 = input("What is your player 2?\n")
-else:
-    player = input("Whats your name?\n")
-    player1 = ("CPU")
+loop = "y"
 
-#Se restablecen los contadores a 0
-winsplayer = 0
-winsplayer1 = 0
-tie_count = 0
-totalrounds = int(rounds()) #Se recibe el numero total de rondas a jugar
-clear_terminal()
-for n in range(0, totalrounds): #bucle incremental que se repite el numero de rondas a jugar
-  print("Round " + str(n + 1)) #imprime el numero de ronda
-  results = match(numberofplayers, player, player1) #Se ejecuta la funcion match que dara lugar a la partida
+if numberofplayers == 2:
+  player = input("What is your name player 1?\n")
+  player1 = input("What is your player 2?\n")
+else:
+  player = input("Whats your name?\n")
+  player1 = ("CPU")
+  
+while loop.lower()  in ["yes", "y"]:
+  #Se restablecen los contadores a 0
+  winsplayer = 0
+  winsplayer1 = 0
+  tie_count = 0
+  totalrounds = int(rounds()) #Se recibe el numero total de rondas a jugar
+  clear_terminal()
+  for n in range(0, totalrounds): #bucle incremental que se repite el numero de rondas a jugar
+    print("Round " + str(n + 1)) #imprime el numero de ronda
+    results = match(numberofplayers, player, player1) #Se ejecuta la funcion match que dara lugar a la partida
   if results == "tie":
     print ("its a tie")
     tie_count += +1
@@ -121,11 +124,19 @@ for n in range(0, totalrounds): #bucle incremental que se repite el numero de ro
     winsplayer1 += 1
 
 #Limpia el panel y muestra los contadores
-clear_terminal()
-print("Total tie rounds:", tie_count)
-print("Total wins rounds for:", player,winsplayer)
-print("Total wins rounds for:", player1, winsplayer1)
-if winsplayer > winsplayer1:
-  print("The winner is:", player)
-elif winsplayer < winsplayer1:
-  print("The winner is:", player1)
+  clear_terminal()
+  print("Total tie rounds:", tie_count)
+  print("Total wins rounds for:", player,winsplayer)
+  print("Total wins rounds for:", player1, winsplayer1)
+  if winsplayer > winsplayer1:
+    print("The winner is:", player)
+  elif winsplayer < winsplayer1:
+    print("The winner is:", player1)
+  loop = input("Do you want to play again? (yes/no)\n")
+  if loop.lower() in ["yes", "y"]:
+    loop = "yes"
+    clear_terminal()
+  else:
+    clear_terminal()
+    loop = "no"
+    print("Great game, see you soon!")
